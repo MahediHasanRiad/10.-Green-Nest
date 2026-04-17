@@ -2,8 +2,10 @@ import { prisma } from "../../../lib/prisma.js";
 import { ApiError } from "../../../Utils/apiError.js";
 import { apiResponse } from "../../../Utils/apiResponse.js";
 import { asyncHandler } from "../../../Utils/asyncHandler.js";
+import { generateToken } from "../../../Utils/generateAccessToken.js";
 import type { loginType } from "../auth.type.js";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
+import { verifyUser } from "../Utils/user.js";
 
 export const loginController = asyncHandler(async (req, res) => {
   /**
@@ -18,12 +20,18 @@ export const loginController = asyncHandler(async (req, res) => {
   if (!email || !password)
     throw new ApiError(400, "Email & Password are required !!!");
 
-  // find user
-  const user = await prisma.user.findFirst({where: {email}})
+  // verify user
+  const { user, accessToken } = await verifyUser(email, password);
 
-  // varify password
-  const pass = await bcrypt.compare(password, user?.password as string)
-  if(!pass) throw new ApiError(400, 'invalid password !!!')
+  const options = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax" as const,
+    path: "/",
+  };
 
-  res.status(200).json(new apiResponse(200, user))
+  res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .json(new apiResponse(200, user));
 });
