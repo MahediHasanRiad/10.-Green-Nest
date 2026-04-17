@@ -1,0 +1,2906 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title:  Urban Farming Platform
+  description: A Plant entity representing a plant in the urban farming system, including its type, health status, and ownership details. Used to track plant information within rental spaces and manage basic growth and maintenance data.
+  contact:
+    name: Mahedi Hasan Riad
+    email: contact.mahedihasan@gmail.com
+
+servers:
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/self-7da/GreenNest/1.0.0
+- description: LocalHost servers
+  url: http://localhost:3000/api/v1
+
+tags: 
+  - name: Admin 
+    description: Admin EndPoint
+  - name: User
+    description: User EndPoint
+  - name: Vendor
+    description: Vendor Profile EndPoint
+  - name: Product
+    description: Product EndPoint
+  - name: RentalSpace
+    description: Rental Space EndPoint
+  - name: Order
+    description: Order EndPoint
+  - name: Rent
+    description: user booking rental-space related EndPoint
+  - name: Plant
+    description: Plants tracing EndPoint
+  - name: Sustainability 
+    description: Sustainability Cert EndPoint
+
+paths: 
+  '/users?query=params':
+    get:
+      security:
+        - bearerAuth: []
+      description: List of all user based on Query
+      tags: [User]
+      parameters:
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses:
+        '200':
+          description: All user List
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32 
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  userData: 
+                    type: array
+                    items: 
+                      allOf:
+                        - $ref: '#/components/schemas/userDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties: 
+                                self-link: 
+                                  type: string
+                                  example: user/s8df678s7df68s7d6f
+                        
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self: 
+                        type: string
+                        example: user/fasd3434ljlkj
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500': 
+          $ref: '#/components/responses/500'
+  '/user':
+    post: 
+      security: 
+        - bearerAuth: []
+      tags: 
+        - User
+      description: Create a user 
+      requestBody: 
+        description: provide a valid information 
+        content: 
+          application/json: 
+            schema:
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Riad
+                email:
+                  type: string
+                  format: email
+                  example: riad@gmail.com
+                password: 
+                  type: string
+                  example: riad123  
+              required: [name, email, password]
+      responses: 
+        '201':
+          description: successfully create a User
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  user:
+                    $ref: '#/components/schemas/userDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/users/id':  
+    get:
+      description: find a single user
+      tags: 
+        - User 
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses:
+        '200':
+          description: successfully found the user 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message: 
+                    type: string
+                    example: success 
+                  user: 
+                    $ref: '#/components/schemas/userDTO'
+                  links:
+                    type: object
+                    properties: 
+                      self: 
+                        type: string
+                        example: user/s8d7f68as7df8sdf9
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      description: update user 
+      tags: 
+        - User 
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: provide a valid name 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                name: 
+                  type: string
+                  example: Riad 
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number 
+                    format: int32
+                    example: 200
+                  message: 
+                    type: string
+                    example: successfully updated 
+                  user:
+                    $ref: '#/components/schemas/userDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      description: delete user 
+      tags: 
+        - User 
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '204':
+          description: successfully deleted
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 204
+                  message:
+                    type: string
+                    example: successfully Delete 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/users/reset-password':
+    patch:
+      description: reset password 
+      tags: 
+        - User 
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: provide valid old password
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties: 
+                oldPassword: 
+                  type: string
+                  example: riad123 
+                newPassword:
+                  type: string
+                  example: riad1234 
+      responses: 
+        '200':
+          description: successfully reset password 
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully reset password 
+                  password:
+                    type: object
+                    properties:       
+                      updated password: 
+                        type: string
+                        example: riad1234
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      
+  '/Vendors?query=params':
+    get:
+      description: List of all vendors
+      tags: 
+        - Vendor
+      security: 
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/vendorDTO'
+                        - type: object
+                          properties: 
+                            user:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: Mahedi Hasan
+                            links:
+                              type: object
+                              properties: 
+                                self-link:
+                                  type: string
+                                  example: users/s8df6sd67f8s67df87sdf
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: /vendors?query=params 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+                    
+
+  '/vendor':
+    post: 
+      description: create a vendor profile 
+      tags: 
+        - Vendor
+      requestBody: 
+        description: provide userId, name, location 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                userId: 
+                  type: string
+                  example: users/s7df576sdf78s6df8769s7df
+                farm-name:
+                  type: string
+                  example: RST Farm 
+                farm-Location:
+                  type: string
+                  example: Lohagara, Padua
+              required: [userId, farm-name, farm-Location]
+      responses: 
+        '201':
+          description: successfully create a vendor profile
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: successfully create a vendor profile
+                  data:
+                    $ref: '#/components/schemas/vendorDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendors/id':
+    get:
+      description: find a single vendor profile 
+      tags: 
+        - Vendor
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: object
+                    properties: 
+                      userId:
+                        type: string
+                        example: a8d6f786adf78sdf87a9sdf7
+                      farm-name:
+                        type: string
+                        example: RST Farm 
+                      farm-Location:
+                        type: string
+                        example: Lohagara, Padua
+                      user:
+                        type: object
+                        properties: 
+                          name:
+                            type: string
+                            example: Mahedi Hasan Riad 
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch: 
+      description: update vendor profile 
+      tags: 
+        - Vendor
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: Provide update item 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                farm-Name:
+                  type: string
+                  example: RST Farm 
+                farm-Location:
+                  type: string
+                  example: Lohagara, Padua
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated
+                  data:
+                    $ref: '#/components/schemas/vendorDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      description: delete vendor profile 
+      tags: 
+        - Vendor
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '204':
+          description: successfully deleted 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 204 
+                  message:
+                    type: string
+                    example: successfully deleted 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/products?query=params':
+    get: 
+      description: list of all products 
+      tags: 
+        - Product
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/productDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: products?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/product':
+    post:
+      description: create a product 
+      tags: 
+        - Product
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: product valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                vendorId:
+                  type: string
+                  example: s8df678sd67f8s76df87sd
+                name:
+                  type: string
+                  example: Tometo 
+                description:
+                  type: string
+                  example: something about plant 
+                price:
+                  type: number
+                  format: int32
+                  example: 100
+                category:
+                  type: string
+                  enum: ['seeds', 'Tools', 'Rrganic products'] 
+                  example: seeds
+                availableQuantity:
+                  type: number
+                  format: int32
+                  example: 100
+                sustainabilityCardId:
+                  type: string
+                  example: card/8sd76f8s7d6f8s7d6f
+              required: [vendorId, name, description, price, category, availableQuantity, sustainabilityCardId]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    $ref: '#/components/schemas/productDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/products/id':
+    get:
+      description: find a single Product
+      tags: 
+        - Product
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/productDTO'
+                      - type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self-link: 
+                                type: string
+                                example: products/8sd6f7s6d5f8s7d6f87sd
+                              vendor-link:
+                                type: string
+                                example: vendor/8sdf678sd7f687ds6fsdf
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch: 
+      description: update product info 
+      tags: 
+        - Product
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: product data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Tometo 
+                description:
+                  type: string
+                  example: something about plant 
+                price:
+                  type: number
+                  format: int32
+                  example: 100
+                category:
+                  type: string
+                  enum: ['seeds', 'Tools', 'Rrganic products'] 
+                  example: seeds
+                availableQuantity:
+                  type: number
+                  format: int32
+                  example: 100
+                sustainabilityCardId:
+                  type: string
+                  default: card/s8df678sd76f8sd76f
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/productDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      description: delete product 
+      tags: 
+        - Product
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '204':
+          description: successfully deleted 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 204 
+                  message:
+                    type: string
+                    example: successfully deleted 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor-products/id':
+    get: 
+      description: list of all products by vendor
+      tags: 
+        - Product
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/productDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: products?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/rendtal-space?query=params':
+    get: 
+      description: list of all rental-space 
+      tags: 
+        - RentalSpace
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/rentalSpaceDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/rental-space':
+    post:
+      description: create a rental-space 
+      tags: 
+        - RentalSpace
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: product valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                vendorId:
+                  type: string
+                  example: s8df678sd67f8s76df87sd
+                location:
+                  type: string
+                  example: Lohagara 
+                size:
+                  type: string
+                  example: 5.6M
+                price:
+                  type: number
+                  format: int32
+                  example: 100
+                availability:
+                  type: boolean
+                  example: true
+              required: [vendorId, location, size, price, category, availability ]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    $ref: '#/components/schemas/rentalSpaceDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/rental-space/id':
+    get:
+      description: find a single rental-space
+      tags: 
+        - RentalSpace
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/rentalSpaceDTO'
+                      - type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self-link: 
+                                type: string
+                                example: renta-space/8sd6f7s6d5f8s7d6f87sd
+                              vendor-link:
+                                type: string
+                                example: vendor/8sdf678sd7f687ds6fsdf
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch: 
+      description: update rental-space info 
+      tags: 
+        - RentalSpace
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: rental-space data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                vendorId:
+                  type: string
+                  example: s8df678sd67f8s76df87sd
+                location:
+                  type: string
+                  example: Lohagara 
+                size:
+                  type: string
+                  example: 5.6M
+                price:
+                  type: number
+                  format: int32
+                  example: 100
+                availability:
+                  type: boolean
+                  example: true
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/rentalSpaceDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      description: delete rental-space 
+      tags: 
+        - RentalSpace
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '204':
+          description: successfully deleted 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 204 
+                  message:
+                    type: string
+                    example: successfully deleted 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor-products/vendor-id':
+    get: 
+      description: list of all rental-space by vendor
+      tags: 
+        - RentalSpace
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/rentalSpaceDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/product-orders?query=params':
+    get: 
+      description: list of all rental-space 
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/orderDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            product:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: Temoto 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/product-order':
+    post:
+      description: create a order 
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: product valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                userId:
+                  type: string
+                  example: users/s8df678sd67f8s76df87sd
+                produceId:
+                  type: string
+                  example: products/s8df678sd67f8s76df87sd 
+                vendorId:
+                  type: string
+                  example: vendors/s8df678sd67f8s76df87sd 
+                status:
+                  type: string
+                  example: Pending
+              required: [userId, produceId, vendorId, status ]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    $ref: '#/components/schemas/orderDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/product-order/id':
+    get:
+      description: find a single rental-space
+      tags: 
+        - Order
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/orderDTO'
+                      - type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self-link: 
+                                type: string
+                                example: renta-space/8sd6f7s6d5f8s7d6f87sd
+                              user-link:
+                                type: string
+                                example: users/8sd6f7s6d5f8s7d6f87sd
+                              vendor-link:
+                                type: string
+                                example: vendor/8sdf678sd7f687ds6fsdf
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user/products-order-list':
+    get: 
+      description: list of all order by user
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/orderDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            product:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: Temoto 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor/ordered-items-list':
+    get: 
+      description: list of all order by vendor
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/orderDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            product:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: Temoto 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor/product-order-status/productId':
+    patch: 
+      description: update product status  
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: product data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                status:
+                  type: string
+                  enum: ['Pending', 'Completed', 'On the Way', 'Rejected', 'Canceled'] 
+                  example: Pending
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/orderDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user/cancel-order/orderId':
+    patch: 
+      description: cancel order  
+      tags: 
+        - Order
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: cancel order 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                status:
+                  type: string
+                  enum: ['Pending', 'Completed', 'On the Way', 'Rejected', 'Canceled'] 
+                  example: Canceled
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/orderDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/all-rental-spaces?query=params':
+    get: 
+      description: list of all rental-space 
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/rentDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            rentalSpace:
+                              type: object
+                              properties: 
+                                location:
+                                  type: string
+                                  example: Lohagara 
+                                size:
+                                  type: string
+                                  example: 5.6M 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                                rental-space-link:
+                                  type: string
+                                  example: rentalSpaces/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/rental-space/booking':
+    post:
+      description: create / booking a rental-space 
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: privide valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                userId:
+                  type: string
+                  example: users/s8df678sd67f8s76df87sd
+                rentalSpaceId:
+                  type: string
+                  example: products/s8df678sd67f8s76df87sd 
+                vendorId:
+                  type: string
+                  example: vendors/s8df678sd67f8s76df87sd 
+                duration:
+                  type: string
+                  example: 01-08-2026 - 01-12-2026
+                status:
+                  type: string
+                  example: Pending
+              required: [ userId, rentalSpaceId, vendorId, duration, price ]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    $ref: '#/components/schemas/rentDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/rental-spaces/id':
+    get:
+      description: find a single booked places
+      tags: 
+        - Rent
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/rentDTO'
+                      - type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self-link: 
+                                type: string
+                                example: renta-space/8sd6f7s6d5f8s7d6f87sd
+                              user-link:
+                                type: string
+                                example: users/8sd6f7s6d5f8s7d6f87sd
+                              rental-space-link:
+                                type: string
+                                example: rentalSpaces/8sd6f7s6d5f8s7d6f87sd
+                              vendor-link:
+                                type: string
+                                example: vendor/8sdf678sd7f687ds6fsdf
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user/all-rental-space-list':
+    get: 
+      description: list of all rental-space 
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/rentDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            rentalSpace:
+                              type: object
+                              properties: 
+                                location:
+                                  type: string
+                                  example: Lohagara 
+                                size:
+                                  type: string
+                                  example: 5.6M 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                                rental-space-link:
+                                  type: string
+                                  example: rentalSpaces/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor/all-rental-spaces-list':
+    get: 
+      description: list of all rental-space by vendor
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/rentDTO'
+                        - type: object
+                          properties:
+                            user: 
+                              type: object
+                              properties: 
+                                name: 
+                                  type: string
+                                  example: Mahedi Hasan Riad
+                            rentalSpace:
+                              type: object
+                              properties: 
+                                location:
+                                  type: string
+                                  example: Lohagara 
+                                size:
+                                  type: string
+                                  example: 5.6M 
+                                price:
+                                  type: number
+                                  format: int32
+                                  example: 100
+                            vendor:
+                              type: object
+                              properties: 
+                                name:
+                                  type: string
+                                  example: MD. Shamim
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-link:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                                rental-space-link:
+                                  type: string
+                                  example: rentalSpaces/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vendor/rental-space-status':
+    patch: 
+      description: update product info 
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: product data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                status:
+                  type: string
+                  example: Pending   
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/rentDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user/cancel-booking/rental-space-id':
+    patch: 
+      description: cancel booking   
+      tags: 
+        - Rent
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: cancel booking  
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                status:
+                  type: string
+                  enum: ['Pending', 'Completed', 'Rejected', 'Canceled'] 
+                  example: Canceled
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/rentDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/plant':
+    post:
+      description: create a product 
+      tags: 
+        - Plant
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: product valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Tometo 
+                description:
+                  type: string
+                  example: something about plant 
+                status:
+                  type: string
+                  enum: ["healthy", "needs_care", "dead", "unknown"]
+                  example: healthy
+                lastWateredAt:
+                  type: string
+                  example: 10pm 
+                growthStage:
+                  type: string
+                  enum: ["seed", "seedling", "vegetative", "flowering", "harvested"]
+                  example: seed
+                userId:
+                  type: string
+                  example: users/8sd76f8s7d6f8s7d6f
+                rentalSpaceId:
+                  type: string
+                  example: rentalSpaces/8sd76f8s7d6f8s7d6f
+              required: [name, description, status, growthStage, userId, rentalSpaceId]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    $ref: '#/components/schemas/plantDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/plants/id':
+    patch:
+      description: update plant info 
+      tags: 
+        - Plant
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: plant data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Tometo 
+                description:
+                  type: string
+                  example: something about plant 
+                status:
+                  type: string
+                  enum: ["healthy", "needs_care", "dead", "unknown"]
+                  example: healthy
+                lastWateredAt:
+                  type: string
+                  example: 10pm 
+                growthStage:
+                  type: string
+                  enum: ["seed", "seedling", "vegetative", "flowering", "harvested"]
+                  example: seed
+                rentalSpaceId:
+                  type: string
+                  example: rentalSpaces/8sd76f8s7d6f8s7d6f
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/plantDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      description: find a single plant
+      tags: 
+        - Plant
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/plantDTO'
+                      - type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self-link: 
+                                type: string
+                                example: products/8sd6f7s6d5f8s7d6f87sd
+                              rentalSpace-link:
+                                type: string
+                                example: vendor/8sdf678sd7f687ds6fsdf
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      description: delete product 
+      tags: 
+        - Plant
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      
+      responses: 
+        '204':
+          description: successfully deleted 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 204 
+                  message:
+                    type: string
+                    example: successfully deleted 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user/all-plants?query=params':
+    get: 
+      description: list of all plants by user
+      tags: 
+        - Plant
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/plantDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: products/8sd76f8s7df687sd6f
+                                user-link:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                rental-space-link:
+                                  type: string
+                                  example: rentalSpaces/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/SustainabilityCert':
+    post:
+      description: create a product 
+      tags: 
+        - Sustainability
+      security: 
+        - bearerAuth: []
+      requestBody: 
+        description: product valid data 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                vendorId:
+                  type: string
+                  example: 8s67df8s7d6f8s76df87 
+                certifyingAgency:
+                  type: string
+                  example: Agency Name 
+                certificationDate:
+                  type: string
+                  example: 10-08-2026
+              required: [ vendorId, certifyingAgency, certificationDate ]
+      responses: 
+        '201':
+          description: success 
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 201
+                  message: 
+                    type: string
+                    example: successfully created
+                  data:
+                    type: object
+                    properties: 
+                      vendorId:
+                        type: string
+                        example: 8s67df8s7d6f8s76df87 
+                      certifyingAgency:
+                        type: string
+                        example: Agency Name 
+                      certificationDate:
+                        type: string
+                        example: 10-08-2026
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/unverified-user':
+    get: 
+      description: list of all unverified-user
+      tags: 
+        - Admin 
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/userDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/admin/unverified-users/{id}':
+    patch:
+      description: update plant info 
+      tags: 
+        - Admin
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: plant data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                status:
+                  type: string
+                  enum: ['Pending', 'Accepted', 'Rejected']
+                  example: Accepted
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/userDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/admin/unverified-products':
+    get: 
+      description: list of all unverified-products
+      tags: 
+        - Admin 
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/pageParameter'
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/sortByParameter'
+        - $ref: '#/components/parameters/sortTypeParameter'
+        - $ref: '#/components/parameters/searchParameter'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/productDTO'
+                        - type: object
+                          properties:
+                            links:
+                              type: object
+                              properties:
+                                self-links:
+                                  type: string
+                                  example: users/8sd76f8s7df687sd6f
+                                vendor-links:
+                                  type: string
+                                  example: vendor/8sd76f8s7df687sd6f
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    type: object
+                    properties: 
+                      self:
+                        type: string
+                        example: rental-spaces?query=params
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/admin/unverified-products/{id}':
+    patch:
+      description: update product status by admin 
+      tags: 
+        - Admin
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/idParameter'
+      requestBody: 
+        description: plant data that you want to update 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                certificationStatus:
+                  type: string
+                  enum: ['Pending', 'Accepted', 'Rejected']
+                  example: Accepted
+      responses: 
+        '200':
+          description: success 
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  data:
+                    $ref: '#/components/schemas/productDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+components: 
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer 
+      bearerFormat: JWT
+  schemas: 
+    pagination:
+      type: object
+      properties: 
+        page:
+          type: number
+          format: int32
+          example: 1
+        limit:
+          type: number
+          format: int32
+          example: 10
+        next:
+          type: string
+          example: pages-name/3
+        prev:
+          type: string
+          example: page-name/1
+        total-page:
+          type: number
+          format: int32
+          example: 50
+        total-content:
+          type: number
+          format: int32
+          example: 112
+    
+    userDTO:
+      type: object
+      properties: 
+        id:
+          type: string
+          example: afdasdf23234hoij35jk34jo2
+        name: 
+          type: string
+          example: Mahedi Hasan Riad
+        email:
+          type: string
+          example: contact.mahedihasan@gmail.com 
+        role:
+          type: string
+          enum: [ 'Admin', 'User', 'Vendor' ]
+          default: User 
+        status:
+          type: string
+          enum: ['Pending', 'Accepted', 'Rejected']
+          default: Pending
+        createdAt:
+          type: string
+          example: 2024-03-15T08:30:00.000Z
+        updatedAt:
+          type: string
+          example: 2024-03-15T08:30:00.000Z
+    vendorDTO:
+      type: object
+      properties: 
+        userId:
+          type: string
+          example: a8d6f786adf78sdf87a9sdf7
+        farm-name:
+          type: string
+          example: RST Farm 
+        farm-Location:
+          type: string
+          example: Lohagara, Padua
+    productDTO:
+      type: object
+      properties: 
+        vendorId:
+          type: string
+          example: s8df678sd67f8s76df87sd
+        name:
+          type: string
+          example: Tometo 
+        description:
+          type: string
+          example: something about plant 
+        price:
+          type: number
+          format: int32
+          example: 100
+        category:
+          type: string
+          enum: ['seeds', 'Tools', 'Rrganic products'] 
+          example: seeds
+        availableQuantity:
+          type: number
+          format: int32
+          example: 100
+        certificationStatus:
+          type: string
+          enum: ['Pending', 'verified', 'Rejected', 'Expired', 'Not_required']
+          default: Pending
+    rentalSpaceDTO:
+      type: object
+      properties: 
+        vendorId:
+          type: string
+          example: s8df678sd67f8s76df87sd
+        location:
+          type: string
+          example: Lohagara 
+        size:
+          type: string
+          example: 5.6M
+        price:
+          type: number
+          format: int32
+          example: 100
+        availability:
+          type: boolean
+          example: true
+    orderDTO:
+      type: object
+      properties: 
+        userId:
+          type: string
+          example: users/s8df678sd67f8s76df87sd
+        produceId:
+          type: string
+          example: products/s8df678sd67f8s76df87sd 
+        vendorId:
+          type: string
+          example: vendors/s8df678sd67f8s76df87sd 
+        status:
+          type: string
+          example: Pending
+        orderDate:
+          type: string
+          example: 01-12-2026
+    rentDTO:
+      type: object
+      properties: 
+        userId:
+          type: string
+          example: users/s8df678sd67f8s76df87sd
+        rentalSpaceId:
+          type: string
+          example: products/s8df678sd67f8s76df87sd 
+        vendorId:
+          type: string
+          example: vendors/s8df678sd67f8s76df87sd 
+        duration:
+          type: string
+          example: 01-08-2026 - 01-12-2026
+        status:
+          type: string
+          example: Pending
+    plantDTO:
+      type: object
+      properties: 
+        name:
+          type: string
+          example: Tometo 
+        description:
+          type: string
+          example: something about plant 
+        status:
+          type: string
+          enum: ["healthy", "needs_care", "dead", "unknown"]
+          example: healthy
+        lastWateredAt:
+          type: string
+          example: 10pm 
+        growthStage:
+          type: string
+          enum: ["seed", "seedling", "vegetative", "flowering", "harvested"]
+          example: seed
+        userId:
+          type: string
+          example: users/8sd76f8s7d6f8s7d6f
+        rentalSpaceId:
+          type: string
+          example: rentalSpaces/8sd76f8s7d6f8s7d6f
+  
+  parameters:
+    idParameter:
+      in: path
+      name: id 
+      description: user / product / rental id 
+      schema: 
+        type: string
+        example: aqosdfrj21234jojikj34o23i
+      required: true
+    limitParameter:
+      in: query
+      name: Limit
+      description: how many item will show in a page
+      schema: 
+        type: number
+        format: int32
+        example: 10
+    pageParameter:
+      in: query
+      name: Page
+      description: current page number
+      schema:
+        type: number
+        format: int32
+        example: 1
+    sortTypeParameter:
+      in: query
+      name: sortType 
+      description: sort by asc or desc 
+      schema:
+        type: string
+        enum: [ asc, desc ]
+        example: desc 
+    sortByParameter:
+      in: query
+      name: sortBy
+      description: sort by updatedAt or any other field 
+      schema:
+        type: string
+        example: updateAt
+    searchParameter:
+      in: query
+      name: search 
+      description: filter by name or location 
+      schema:
+        type: string
+        example: Riad
+ 
+  responses: 
+    '204':
+       description: empty content
+       content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 401
+              message:
+                type: string
+                example: empty content 
+    '400':
+      description: Bad Request
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code:
+                type: number
+                format: int32
+                example: 400
+              message:
+                type: string
+                example: Bad Request
+              data:
+                type: object
+                properties: 
+                  message:
+                    type: string
+                    example: error
+                  field:
+                    type: string
+                    example: field name
+                  in:
+                    type: string
+                    enum: [Query, Body]
+                    example: Query 
+    '401':
+      description: unauthorized
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 401
+              message:
+                type: string
+                example: unauthorized
+    '404':
+      description: not found
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code:
+                type: number
+                format: int32
+                example: 404
+              message:
+                type: string
+                example: Content Not found 
+    '500':
+      description: Server Error 
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 500
+              message:
+                type: string
+                example: Server Error
+  
