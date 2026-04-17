@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  name     String
+  password String
+  role     String  @default("User")
+  status   String  @default("Pending")
+  vendor   Vendor?
+  orders   Order[]
+  rents    Rent[]
+  plants   Plant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vendor {
+  id                  String               @id @default(uuid())
+  user                User                 @relation(fields: [userId], references: [id])
+  userId              String               @unique
+  farmName            String
+  farmLocation        String
+  products            Product[]
+  rentalSpaces        RentalSpace[]
+  orders              Order[]
+  rents               Rent[]
+  sustainabilityCards SustainabilityCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id                  String  @id @default(uuid())
+  vendor              Vendor  @relation(fields: [vendorId], references: [id])
+  vendorId            String
+  name                String  @default("Tometo")
+  description         String  @default("something about plant")
+  price               Int     @default(100)
+  category            String  @default("seeds")
+  availableQuantity   Int     @default(1)
+  certificationStatus String  @default("Pending")
+  orders              Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RentalSpace {
+  id           String  @id @default(uuid())
+  vendor       Vendor  @relation(fields: [vendorId], references: [id])
+  vendorId     String
+  location     String  @default("Lohagara")
+  size         String  @default("5.6M")
+  price        Int     @default(100)
+  availability Boolean @default(true)
+  rents        Rent[]
+  plants       Plant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id        String  @id @default(uuid())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  vendor    Vendor  @relation(fields: [vendorId], references: [id])
+  vendorId  String
+  status    String  @default("Pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rent {
+  id            String      @id @default(uuid())
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
+  vendor        Vendor      @relation(fields: [vendorId], references: [id])
+  vendorId      String
+  rentalSpace   RentalSpace @relation(fields: [rentalSpaceId], references: [id])
+  rentalSpaceId String
+  duration      String      @default("01-08-2026 - 01-12-2026")
+  status        String      @default("Pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Plant {
+  id            String      @id @default(uuid())
+  name          String      @default("Tometo")
+  description   String      @default("something about plant")
+  status        String      @default("healthy")
+  lastWateredAt String      @default("10pm")
+  growthStage   String      @default("seed")
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
+  rentalSpace   RentalSpace @relation(fields: [rentalSpaceId], references: [id])
+  rentalSpaceId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SustainabilityCard {
+  id                String @id @default(uuid())
+  vendor            Vendor @relation(fields: [vendorId], references: [id])
+  vendorId          String
+  certifyingAgency  String @default("Agency Name")
+  certificationDate String @default("10-08-2026")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
