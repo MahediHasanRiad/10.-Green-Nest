@@ -1,34 +1,27 @@
 interface ApiErrorType {
-    statusCode: number;
-    message: string;
-    errors?: string[];
-    stack?: string;
-    success: boolean;
+  statusCode: number;
+  message: string;
+  errors?: string[];
+  success: boolean;
+  stack?: string;
 }
 
 export class ApiError extends Error implements ApiErrorType {
-    public statusCode: number;
-    public success: boolean;
-    public errors: string[];
-    public data: any;
+  public statusCode: number;
+  public success: boolean;
+  public errors?: string[];
 
-    constructor(
-        statusCode: number, 
-        message: string = "Something went wrong", 
-        errors: string[] = [], 
-        stack: string = ''
-    ) {
-        super(message);
-        this.statusCode = statusCode;
-        this.message = message;
-        this.errors = errors;
-        this.data = null;
-        this.success = false;
+  constructor(
+    statusCode: number,
+    message: string = "Something went wrong",
+    errors?: string[]
+  ) {
+    super(message);
 
-        if (stack) {
-            this.stack = stack;
-        } else {
-            Error.captureStackTrace(this, this.constructor);
-        }
-    }
+    this.statusCode = statusCode;
+    this.success = false;
+    this.errors = errors ?? [];
+
+    Error.captureStackTrace(this, this.constructor);
+  }
 }

@@ -1,7 +1,7 @@
-import { prisma } from "../../../lib/prisma.js";
 import { apiResponse } from "../../../Utils/apiResponse.js";
 import { asyncHandler } from "../../../Utils/asyncHandler.js";
 import type { RegisterType } from "../auth.type.js";
+import { ExistEmail } from "../Repository/check-email.repository.js";
 import { createUser } from "../Repository/create-user.repository.js";
 import { RegisterInputValidation } from "../Validation/register-input.validation.js";
 
@@ -18,7 +18,7 @@ export const registerController = asyncHandler( async (req, res) => {
   RegisterInputValidation(name, email, password)
 
   // check email exist or not
-  await prisma.user.findUnique({where: {email}})
+  await ExistEmail(email)
 
   // register user
   const user = await createUser(name, email, password)
