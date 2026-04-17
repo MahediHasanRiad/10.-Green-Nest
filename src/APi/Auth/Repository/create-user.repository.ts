@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/prisma.js";
-import { ApiError } from "../../../Utils/apiError.js";
+import createError from 'http-errors'
 import bcrypt from 'bcrypt'
 
 export const createUser = async (
@@ -22,6 +22,6 @@ export const createUser = async (
   } 
   catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Database connection failed";
-    throw new ApiError(500, "Internal Server Error", [message]);
+    throw createError(500, "Internal Server Error", [message]);
   }
 };

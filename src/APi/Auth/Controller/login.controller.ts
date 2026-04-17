@@ -1,11 +1,8 @@
-import { prisma } from "../../../lib/prisma.js";
-import { ApiError } from "../../../Utils/apiError.js";
 import { apiResponse } from "../../../Utils/apiResponse.js";
 import { asyncHandler } from "../../../Utils/asyncHandler.js";
-import { generateToken } from "../../../Utils/generateAccessToken.js";
 import type { loginType } from "../auth.type.js";
-import bcrypt from "bcrypt";
 import { verifyUser } from "../Utils/user.js";
+import createError from 'http-errors'
 
 export const loginController = asyncHandler(async (req, res) => {
   /**
@@ -18,7 +15,7 @@ export const loginController = asyncHandler(async (req, res) => {
   const { email, password } = req.body as loginType;
 
   if (!email || !password)
-    throw new ApiError(400, "Email & Password are required !!!");
+    throw createError(400, "Email & Password are required !!!");
 
   // verify user
   const { user, accessToken } = await verifyUser(email, password);
