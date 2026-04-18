@@ -23,6 +23,7 @@ enum RentStatus {
   PENDING
   CONFIRMED
   REJECTED
+  CANCELLED
 }
 
 enum PlantStatus {

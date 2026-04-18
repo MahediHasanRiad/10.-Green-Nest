@@ -9,6 +9,7 @@ import { productRouter } from './APi/Product/Routers/product.router.js';
 import { sustainabilityRouter } from './APi/Sustainability/Routers/sustainability.router.js';
 import { rentalSpaceRoute } from './APi/Rental-Space/Routers/tental-space.router.js';
 import { orderRouter } from './APi/Order/Routers/order.router.js';
+import { rentRouter } from './APi/Rent/Routers/rent.router.js';
 
 
 const app = express()
@@ -29,6 +30,7 @@ app.use('/api/v1', productRouter)
 app.use('/api/v1', rentalSpaceRoute)
 app.use('/api/v1', sustainabilityRouter)
 app.use('/api/v1', orderRouter)
+app.use('/api/v1', rentRouter)
 
 
 

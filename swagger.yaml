@@ -1762,7 +1762,7 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
-  '/rental-spaces/id':
+  '/booked-spaces/:bookingId':
     get:
       description: find a single booked places
       tags: 
@@ -1811,7 +1811,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  '/user/all-rental-space-list':
+  '/all-booked-spaces-by-user':
     get: 
       description: list of all rental-space 
       tags: 
@@ -1901,7 +1901,7 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
-  '/vendor/all-rental-spaces-list':
+  '/all-booked-spaces-by-vendor/:vendorId':
     get: 
       description: list of all rental-space by vendor
       tags: 
@@ -1991,9 +1991,9 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
-  '/vendor/rental-space-status':
+  '/rental-space-status-by-vendor/:rentalSpaceId':
     patch: 
-      description: update product info 
+      description: rental-space-status-by-vendor
       tags: 
         - Rent
       security: 
@@ -2035,7 +2035,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  '/user/cancel-booking/rental-space-id':
+  '/cancel-booking/:bookedId':
     patch: 
       description: cancel booking   
       tags: 

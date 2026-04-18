@@ -30,7 +30,8 @@ export type Status = (typeof Status)[keyof typeof Status]
 export const RentStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
 } as const
 
 export type RentStatus = (typeof RentStatus)[keyof typeof RentStatus]
