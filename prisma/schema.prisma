@@ -45,6 +45,7 @@ enum CertificateStatus {
   ISSUED
   REVOKED
   EXPIRED
+  ACCEPTED
 }
 
 enum OrderStatus {
@@ -59,7 +60,7 @@ enum OrderStatus {
 
 enum Category {
   SEED
-  Tools
+  TOOLS
   ORGANIC
 }
 
@@ -136,6 +137,7 @@ model Order {
   productId String
   vendor    Vendor      @relation(fields: [vendorId], references: [id])
   vendorId  String
+  quantity  Int         @default(1)
   status    OrderStatus @default(PENDING)
 
   createdAt DateTime @default(now())

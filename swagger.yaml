@@ -1283,6 +1283,10 @@ paths:
                 produceId:
                   type: string
                   example: products/s8df678sd67f8s76df87sd 
+                quantity:
+                  type: number
+                  format: int32 
+                  example: 5
                 vendorId:
                   type: string
                   example: vendors/s8df678sd67f8s76df87sd 
@@ -2759,7 +2763,11 @@ components:
           example: users/s8df678sd67f8s76df87sd
         produceId:
           type: string
-          example: products/s8df678sd67f8s76df87sd 
+          example: products/s8df678sd67f8s76df87sd
+        quantity:
+          type: number
+          format: int32 
+          example: 5 
         vendorId:
           type: string
           example: vendors/s8df678sd67f8s76df87sd 

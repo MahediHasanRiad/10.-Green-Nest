@@ -61,7 +61,8 @@ export const CertificateStatus = {
   PENDING_APPROVAL: 'PENDING_APPROVAL',
   ISSUED: 'ISSUED',
   REVOKED: 'REVOKED',
-  EXPIRED: 'EXPIRED'
+  EXPIRED: 'EXPIRED',
+  ACCEPTED: 'ACCEPTED'
 } as const
 
 export type CertificateStatus = (typeof CertificateStatus)[keyof typeof CertificateStatus]
@@ -82,7 +83,7 @@ export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
 export const Category = {
   SEED: 'SEED',
-  Tools: 'Tools',
+  TOOLS: 'TOOLS',
   ORGANIC: 'ORGANIC'
 } as const
 
