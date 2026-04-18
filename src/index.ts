@@ -7,6 +7,7 @@ import { globalErrorHandler } from './Utils/global-error-handler.js';
 import { vendorRouter } from './APi/Vendor/Routers/vendor.router.js';
 import { productRouter } from './APi/Product/Routers/product.router.js';
 import { sustainabilityRouter } from './APi/Sustainability/Routers/sustainability.router.js';
+import { rentalSpaceRoute } from './APi/Rental-Space/Routers/tental-space.router.js';
 
 
 const app = express()
@@ -24,6 +25,7 @@ app.use('/api/v1', authRoute)
 app.use('/api/v1', userRouter)
 app.use('/api/v1', vendorRouter)
 app.use('/api/v1', productRouter)
+app.use('/api/v1', rentalSpaceRoute)
 app.use('/api/v1', sustainabilityRouter)
 
 
