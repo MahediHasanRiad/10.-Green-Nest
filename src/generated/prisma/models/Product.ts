@@ -42,9 +42,10 @@ export type ProductMinAggregateOutputType = {
   name: string | null
   description: string | null
   price: number | null
-  category: string | null
+  category: $Enums.Category | null
   availableQuantity: number | null
-  certificationStatus: string | null
+  sustainabilityCardId: string | null
+  certificationStatus: $Enums.CertificateStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,9 +56,10 @@ export type ProductMaxAggregateOutputType = {
   name: string | null
   description: string | null
   price: number | null
-  category: string | null
+  category: $Enums.Category | null
   availableQuantity: number | null
-  certificationStatus: string | null
+  sustainabilityCardId: string | null
+  certificationStatus: $Enums.CertificateStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +72,7 @@ export type ProductCountAggregateOutputType = {
   price: number
   category: number
   availableQuantity: number
+  sustainabilityCardId: number
   certificationStatus: number
   createdAt: number
   updatedAt: number
@@ -95,6 +98,7 @@ export type ProductMinAggregateInputType = {
   price?: true
   category?: true
   availableQuantity?: true
+  sustainabilityCardId?: true
   certificationStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -108,6 +112,7 @@ export type ProductMaxAggregateInputType = {
   price?: true
   category?: true
   availableQuantity?: true
+  sustainabilityCardId?: true
   certificationStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -121,6 +126,7 @@ export type ProductCountAggregateInputType = {
   price?: true
   category?: true
   availableQuantity?: true
+  sustainabilityCardId?: true
   certificationStatus?: true
   createdAt?: true
   updatedAt?: true
@@ -219,9 +225,10 @@ export type ProductGroupByOutputType = {
   name: string
   description: string
   price: number
-  category: string
+  category: $Enums.Category
   availableQuantity: number
-  certificationStatus: string
+  sustainabilityCardId: string
+  certificationStatus: $Enums.CertificateStatus
   createdAt: Date
   updatedAt: Date
   _count: ProductCountAggregateOutputType | null
@@ -255,12 +262,14 @@ export type ProductWhereInput = {
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.IntFilter<"Product"> | number
-  category?: Prisma.StringFilter<"Product"> | string
+  category?: Prisma.EnumCategoryFilter<"Product"> | $Enums.Category
   availableQuantity?: Prisma.IntFilter<"Product"> | number
-  certificationStatus?: Prisma.StringFilter<"Product"> | string
+  sustainabilityCardId?: Prisma.StringFilter<"Product"> | string
+  certificationStatus?: Prisma.EnumCertificateStatusFilter<"Product"> | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  sustainabilityCard?: Prisma.XOR<Prisma.SustainabilityCardScalarRelationFilter, Prisma.SustainabilityCardWhereInput>
   orders?: Prisma.OrderListRelationFilter
 }
 
@@ -272,10 +281,12 @@ export type ProductOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   category?: Prisma.SortOrder
   availableQuantity?: Prisma.SortOrder
+  sustainabilityCardId?: Prisma.SortOrder
   certificationStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   vendor?: Prisma.VendorOrderByWithRelationInput
+  sustainabilityCard?: Prisma.SustainabilityCardOrderByWithRelationInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
@@ -288,12 +299,14 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.IntFilter<"Product"> | number
-  category?: Prisma.StringFilter<"Product"> | string
+  category?: Prisma.EnumCategoryFilter<"Product"> | $Enums.Category
   availableQuantity?: Prisma.IntFilter<"Product"> | number
-  certificationStatus?: Prisma.StringFilter<"Product"> | string
+  sustainabilityCardId?: Prisma.StringFilter<"Product"> | string
+  certificationStatus?: Prisma.EnumCertificateStatusFilter<"Product"> | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  sustainabilityCard?: Prisma.XOR<Prisma.SustainabilityCardScalarRelationFilter, Prisma.SustainabilityCardWhereInput>
   orders?: Prisma.OrderListRelationFilter
 }, "id">
 
@@ -305,6 +318,7 @@ export type ProductOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   category?: Prisma.SortOrder
   availableQuantity?: Prisma.SortOrder
+  sustainabilityCardId?: Prisma.SortOrder
   certificationStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -324,9 +338,10 @@ export type ProductScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   description?: Prisma.StringWithAggregatesFilter<"Product"> | string
   price?: Prisma.IntWithAggregatesFilter<"Product"> | number
-  category?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  category?: Prisma.EnumCategoryWithAggregatesFilter<"Product"> | $Enums.Category
   availableQuantity?: Prisma.IntWithAggregatesFilter<"Product"> | number
-  certificationStatus?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  sustainabilityCardId?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  certificationStatus?: Prisma.EnumCertificateStatusWithAggregatesFilter<"Product"> | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
@@ -336,12 +351,13 @@ export type ProductCreateInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   vendor: Prisma.VendorCreateNestedOneWithoutProductsInput
+  sustainabilityCard: Prisma.SustainabilityCardCreateNestedOneWithoutProductsInput
   orders?: Prisma.OrderCreateNestedManyWithoutProductInput
 }
 
@@ -351,9 +367,10 @@ export type ProductUncheckedCreateInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  sustainabilityCardId: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutProductInput
@@ -364,12 +381,13 @@ export type ProductUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUpdateOneRequiredWithoutProductsNestedInput
+  sustainabilityCard?: Prisma.SustainabilityCardUpdateOneRequiredWithoutProductsNestedInput
   orders?: Prisma.OrderUpdateManyWithoutProductNestedInput
 }
 
@@ -379,9 +397,10 @@ export type ProductUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  sustainabilityCardId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutProductNestedInput
@@ -393,9 +412,10 @@ export type ProductCreateManyInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  sustainabilityCardId: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -405,9 +425,9 @@ export type ProductUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -418,9 +438,10 @@ export type ProductUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  sustainabilityCardId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -443,6 +464,7 @@ export type ProductCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   category?: Prisma.SortOrder
   availableQuantity?: Prisma.SortOrder
+  sustainabilityCardId?: Prisma.SortOrder
   certificationStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -461,6 +483,7 @@ export type ProductMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   category?: Prisma.SortOrder
   availableQuantity?: Prisma.SortOrder
+  sustainabilityCardId?: Prisma.SortOrder
   certificationStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -474,6 +497,7 @@ export type ProductMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   category?: Prisma.SortOrder
   availableQuantity?: Prisma.SortOrder
+  sustainabilityCardId?: Prisma.SortOrder
   certificationStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -539,6 +563,14 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumCategoryFieldUpdateOperationsInput = {
+  set?: $Enums.Category
+}
+
+export type EnumCertificateStatusFieldUpdateOperationsInput = {
+  set?: $Enums.CertificateStatus
+}
+
 export type ProductCreateNestedOneWithoutOrdersInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutOrdersInput, Prisma.ProductUncheckedCreateWithoutOrdersInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutOrdersInput
@@ -553,16 +585,59 @@ export type ProductUpdateOneRequiredWithoutOrdersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutOrdersInput, Prisma.ProductUpdateWithoutOrdersInput>, Prisma.ProductUncheckedUpdateWithoutOrdersInput>
 }
 
+export type ProductCreateNestedManyWithoutSustainabilityCardInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput> | Prisma.ProductCreateWithoutSustainabilityCardInput[] | Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput | Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput[]
+  createMany?: Prisma.ProductCreateManySustainabilityCardInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutSustainabilityCardInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput> | Prisma.ProductCreateWithoutSustainabilityCardInput[] | Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput | Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput[]
+  createMany?: Prisma.ProductCreateManySustainabilityCardInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUpdateManyWithoutSustainabilityCardNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput> | Prisma.ProductCreateWithoutSustainabilityCardInput[] | Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput | Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutSustainabilityCardInput | Prisma.ProductUpsertWithWhereUniqueWithoutSustainabilityCardInput[]
+  createMany?: Prisma.ProductCreateManySustainabilityCardInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutSustainabilityCardInput | Prisma.ProductUpdateWithWhereUniqueWithoutSustainabilityCardInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutSustainabilityCardInput | Prisma.ProductUpdateManyWithWhereWithoutSustainabilityCardInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutSustainabilityCardNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput> | Prisma.ProductCreateWithoutSustainabilityCardInput[] | Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput | Prisma.ProductCreateOrConnectWithoutSustainabilityCardInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutSustainabilityCardInput | Prisma.ProductUpsertWithWhereUniqueWithoutSustainabilityCardInput[]
+  createMany?: Prisma.ProductCreateManySustainabilityCardInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutSustainabilityCardInput | Prisma.ProductUpdateWithWhereUniqueWithoutSustainabilityCardInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutSustainabilityCardInput | Prisma.ProductUpdateManyWithWhereWithoutSustainabilityCardInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
 export type ProductCreateWithoutVendorInput = {
   id?: string
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  sustainabilityCard: Prisma.SustainabilityCardCreateNestedOneWithoutProductsInput
   orders?: Prisma.OrderCreateNestedManyWithoutProductInput
 }
 
@@ -571,9 +646,10 @@ export type ProductUncheckedCreateWithoutVendorInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  sustainabilityCardId: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutProductInput
@@ -614,9 +690,10 @@ export type ProductScalarWhereInput = {
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.IntFilter<"Product"> | number
-  category?: Prisma.StringFilter<"Product"> | string
+  category?: Prisma.EnumCategoryFilter<"Product"> | $Enums.Category
   availableQuantity?: Prisma.IntFilter<"Product"> | number
-  certificationStatus?: Prisma.StringFilter<"Product"> | string
+  sustainabilityCardId?: Prisma.StringFilter<"Product"> | string
+  certificationStatus?: Prisma.EnumCertificateStatusFilter<"Product"> | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
@@ -626,12 +703,13 @@ export type ProductCreateWithoutOrdersInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   vendor: Prisma.VendorCreateNestedOneWithoutProductsInput
+  sustainabilityCard: Prisma.SustainabilityCardCreateNestedOneWithoutProductsInput
 }
 
 export type ProductUncheckedCreateWithoutOrdersInput = {
@@ -640,9 +718,10 @@ export type ProductUncheckedCreateWithoutOrdersInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  sustainabilityCardId: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -668,12 +747,13 @@ export type ProductUpdateWithoutOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUpdateOneRequiredWithoutProductsNestedInput
+  sustainabilityCard?: Prisma.SustainabilityCardUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutOrdersInput = {
@@ -682,11 +762,66 @@ export type ProductUncheckedUpdateWithoutOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  sustainabilityCardId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ProductCreateWithoutSustainabilityCardInput = {
+  id?: string
+  name?: string
+  description?: string
+  price?: number
+  category?: $Enums.Category
+  availableQuantity?: number
+  certificationStatus?: $Enums.CertificateStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vendor: Prisma.VendorCreateNestedOneWithoutProductsInput
+  orders?: Prisma.OrderCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutSustainabilityCardInput = {
+  id?: string
+  vendorId: string
+  name?: string
+  description?: string
+  price?: number
+  category?: $Enums.Category
+  availableQuantity?: number
+  certificationStatus?: $Enums.CertificateStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutSustainabilityCardInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput>
+}
+
+export type ProductCreateManySustainabilityCardInputEnvelope = {
+  data: Prisma.ProductCreateManySustainabilityCardInput | Prisma.ProductCreateManySustainabilityCardInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductUpsertWithWhereUniqueWithoutSustainabilityCardInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutSustainabilityCardInput, Prisma.ProductUncheckedUpdateWithoutSustainabilityCardInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSustainabilityCardInput, Prisma.ProductUncheckedCreateWithoutSustainabilityCardInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutSustainabilityCardInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutSustainabilityCardInput, Prisma.ProductUncheckedUpdateWithoutSustainabilityCardInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutSustainabilityCardInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutSustainabilityCardInput>
 }
 
 export type ProductCreateManyVendorInput = {
@@ -694,9 +829,10 @@ export type ProductCreateManyVendorInput = {
   name?: string
   description?: string
   price?: number
-  category?: string
+  category?: $Enums.Category
   availableQuantity?: number
-  certificationStatus?: string
+  sustainabilityCardId: string
+  certificationStatus?: $Enums.CertificateStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -706,11 +842,12 @@ export type ProductUpdateWithoutVendorInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sustainabilityCard?: Prisma.SustainabilityCardUpdateOneRequiredWithoutProductsNestedInput
   orders?: Prisma.OrderUpdateManyWithoutProductNestedInput
 }
 
@@ -719,9 +856,10 @@ export type ProductUncheckedUpdateWithoutVendorInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  sustainabilityCardId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutProductNestedInput
@@ -732,9 +870,64 @@ export type ProductUncheckedUpdateManyWithoutVendorInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.IntFieldUpdateOperationsInput | number
-  category?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
   availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
-  certificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  sustainabilityCardId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ProductCreateManySustainabilityCardInput = {
+  id?: string
+  vendorId: string
+  name?: string
+  description?: string
+  price?: number
+  category?: $Enums.Category
+  availableQuantity?: number
+  certificationStatus?: $Enums.CertificateStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProductUpdateWithoutSustainabilityCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
+  availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vendor?: Prisma.VendorUpdateOneRequiredWithoutProductsNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutSustainabilityCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
+  availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateManyWithoutSustainabilityCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.EnumCategoryFieldUpdateOperationsInput | $Enums.Category
+  availableQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  certificationStatus?: Prisma.EnumCertificateStatusFieldUpdateOperationsInput | $Enums.CertificateStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -778,10 +971,12 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   price?: boolean
   category?: boolean
   availableQuantity?: boolean
+  sustainabilityCardId?: boolean
   certificationStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
   orders?: boolean | Prisma.Product$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -794,10 +989,12 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   category?: boolean
   availableQuantity?: boolean
+  sustainabilityCardId?: boolean
   certificationStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -808,10 +1005,12 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   category?: boolean
   availableQuantity?: boolean
+  sustainabilityCardId?: boolean
   certificationStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -822,28 +1021,33 @@ export type ProductSelectScalar = {
   price?: boolean
   category?: boolean
   availableQuantity?: boolean
+  sustainabilityCardId?: boolean
   certificationStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "name" | "description" | "price" | "category" | "availableQuantity" | "certificationStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "name" | "description" | "price" | "category" | "availableQuantity" | "sustainabilityCardId" | "certificationStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
   orders?: boolean | Prisma.Product$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
 }
 export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  sustainabilityCard?: boolean | Prisma.SustainabilityCardDefaultArgs<ExtArgs>
 }
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Product"
   objects: {
     vendor: Prisma.$VendorPayload<ExtArgs>
+    sustainabilityCard: Prisma.$SustainabilityCardPayload<ExtArgs>
     orders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -852,9 +1056,10 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     description: string
     price: number
-    category: string
+    category: $Enums.Category
     availableQuantity: number
-    certificationStatus: string
+    sustainabilityCardId: string
+    certificationStatus: $Enums.CertificateStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["product"]>
@@ -1252,6 +1457,7 @@ readonly fields: ProductFieldRefs;
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   vendor<T extends Prisma.VendorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VendorDefaultArgs<ExtArgs>>): Prisma.Prisma__VendorClient<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sustainabilityCard<T extends Prisma.SustainabilityCardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SustainabilityCardDefaultArgs<ExtArgs>>): Prisma.Prisma__SustainabilityCardClient<runtime.Types.Result.GetResult<Prisma.$SustainabilityCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.Product$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1287,9 +1493,10 @@ export interface ProductFieldRefs {
   readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
   readonly price: Prisma.FieldRef<"Product", 'Int'>
-  readonly category: Prisma.FieldRef<"Product", 'String'>
+  readonly category: Prisma.FieldRef<"Product", 'Category'>
   readonly availableQuantity: Prisma.FieldRef<"Product", 'Int'>
-  readonly certificationStatus: Prisma.FieldRef<"Product", 'String'>
+  readonly sustainabilityCardId: Prisma.FieldRef<"Product", 'String'>
+  readonly certificationStatus: Prisma.FieldRef<"Product", 'CertificateStatus'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
 }

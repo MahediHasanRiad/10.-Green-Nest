@@ -1076,6 +1076,7 @@ export const ProductScalarFieldEnum = {
   price: 'price',
   category: 'category',
   availableQuantity: 'availableQuantity',
+  sustainabilityCardId: 'sustainabilityCardId',
   certificationStatus: 'certificationStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1129,8 +1130,8 @@ export const PlantScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  status: 'status',
   lastWateredAt: 'lastWateredAt',
+  status: 'status',
   growthStage: 'growthStage',
   userId: 'userId',
   rentalSpaceId: 'rentalSpaceId',
@@ -1190,6 +1191,34 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Role'
+ */
+export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+/**
+ * Reference to a field of type 'Role[]'
+ */
+export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Status'
+ */
+export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+/**
+ * Reference to a field of type 'Status[]'
+ */
+export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1218,9 +1247,93 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Category'
+ */
+export type EnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category'>
+    
+
+
+/**
+ * Reference to a field of type 'Category[]'
+ */
+export type ListEnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificateStatus'
+ */
+export type EnumCertificateStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificateStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificateStatus[]'
+ */
+export type ListEnumCertificateStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificateStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderStatus'
+ */
+export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderStatus[]'
+ */
+export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RentStatus'
+ */
+export type EnumRentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RentStatus[]'
+ */
+export type ListEnumRentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlantStatus'
+ */
+export type EnumPlantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlantStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PlantStatus[]'
+ */
+export type ListEnumPlantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlantStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'GrowthStageStatus'
+ */
+export type EnumGrowthStageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrowthStageStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'GrowthStageStatus[]'
+ */
+export type ListEnumGrowthStageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrowthStageStatus[]'>
     
 
 

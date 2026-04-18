@@ -12,6 +12,7 @@ enum Role {
   VENDOR
   ADMIN
 }
+
 enum Status {
   PENDING
   ACCEPTED
@@ -57,9 +58,9 @@ enum OrderStatus {
 }
 
 enum Category {
-  Seeds
+  SEED
   Tools
-  Organic
+  ORGANIC
 }
 
 model User {
@@ -95,16 +96,18 @@ model Vendor {
 }
 
 model Product {
-  id                  String            @id @default(uuid())
-  vendor              Vendor            @relation(fields: [vendorId], references: [id])
-  vendorId            String
-  name                String            @default("Tometo")
-  description         String            @default("something about plant")
-  price               Int               @default(100)
-  category            Category          @default(Seeds)
-  availableQuantity   Int               @default(1)
-  certificationStatus CertificateStatus @default(PENDING_APPROVAL)
-  orders              Order[]
+  id                   String             @id @default(uuid())
+  vendor               Vendor             @relation(fields: [vendorId], references: [id])
+  vendorId             String
+  name                 String             @default("Tometo")
+  description          String             @default("something about plant")
+  price                Int                @default(100)
+  category             Category           @default(SEED)
+  availableQuantity    Int                @default(1)
+  sustainabilityCard   SustainabilityCard @relation(fields: [sustainabilityCardId], references: [id])
+  sustainabilityCardId String
+  certificationStatus  CertificateStatus  @default(PENDING_APPROVAL)
+  orders               Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -171,11 +174,12 @@ model Plant {
 }
 
 model SustainabilityCard {
-  id                String @id @default(uuid())
-  vendor            Vendor @relation(fields: [vendorId], references: [id])
+  id                String    @id @default(uuid())
+  vendor            Vendor    @relation(fields: [vendorId], references: [id])
   vendorId          String
-  certifyingAgency  String @default("Agency Name")
-  certificationDate String @default("10-08-2026")
+  certifyingAgency  String    @default("Agency Name")
+  certificationDate String    @default("10-08-2026")
+  products          Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

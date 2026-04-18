@@ -9,7 +9,81 @@
 * 🟢 You can import this file directly.
 */
 
+export const Role = {
+  USER: 'USER',
+  VENDOR: 'VENDOR',
+  ADMIN: 'ADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const Status = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type Status = (typeof Status)[keyof typeof Status]
+
+
+export const RentStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type RentStatus = (typeof RentStatus)[keyof typeof RentStatus]
+
+
+export const PlantStatus = {
+  HEALTHY: 'HEALTHY',
+  NEED_CARE: 'NEED_CARE',
+  DISEASED: 'DISEASED',
+  DEAD: 'DEAD'
+} as const
+
+export type PlantStatus = (typeof PlantStatus)[keyof typeof PlantStatus]
+
+
+export const GrowthStageStatus = {
+  SEED: 'SEED',
+  SEEDING: 'SEEDING',
+  GROWING: 'GROWING',
+  MATURE: 'MATURE',
+  HARVESTED: 'HARVESTED'
+} as const
+
+export type GrowthStageStatus = (typeof GrowthStageStatus)[keyof typeof GrowthStageStatus]
+
+
+export const CertificateStatus = {
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  ISSUED: 'ISSUED',
+  REVOKED: 'REVOKED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type CertificateStatus = (typeof CertificateStatus)[keyof typeof CertificateStatus]
+
+
+export const OrderStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED',
+  RETURNED: 'RETURNED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const Category = {
+  SEED: 'SEED',
+  Tools: 'Tools',
+  ORGANIC: 'ORGANIC'
+} as const
+
+export type Category = (typeof Category)[keyof typeof Category]

@@ -111,6 +111,7 @@ export const ProductScalarFieldEnum = {
   price: 'price',
   category: 'category',
   availableQuantity: 'availableQuantity',
+  sustainabilityCardId: 'sustainabilityCardId',
   certificationStatus: 'certificationStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -164,8 +165,8 @@ export const PlantScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  status: 'status',
   lastWateredAt: 'lastWateredAt',
+  status: 'status',
   growthStage: 'growthStage',
   userId: 'userId',
   rentalSpaceId: 'rentalSpaceId',

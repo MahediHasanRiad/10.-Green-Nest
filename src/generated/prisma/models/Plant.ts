@@ -28,9 +28,9 @@ export type PlantMinAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
-  status: string | null
   lastWateredAt: string | null
-  growthStage: string | null
+  status: $Enums.PlantStatus | null
+  growthStage: $Enums.GrowthStageStatus | null
   userId: string | null
   rentalSpaceId: string | null
   createdAt: Date | null
@@ -41,9 +41,9 @@ export type PlantMaxAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
-  status: string | null
   lastWateredAt: string | null
-  growthStage: string | null
+  status: $Enums.PlantStatus | null
+  growthStage: $Enums.GrowthStageStatus | null
   userId: string | null
   rentalSpaceId: string | null
   createdAt: Date | null
@@ -54,8 +54,8 @@ export type PlantCountAggregateOutputType = {
   id: number
   name: number
   description: number
-  status: number
   lastWateredAt: number
+  status: number
   growthStage: number
   userId: number
   rentalSpaceId: number
@@ -69,8 +69,8 @@ export type PlantMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  status?: true
   lastWateredAt?: true
+  status?: true
   growthStage?: true
   userId?: true
   rentalSpaceId?: true
@@ -82,8 +82,8 @@ export type PlantMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  status?: true
   lastWateredAt?: true
+  status?: true
   growthStage?: true
   userId?: true
   rentalSpaceId?: true
@@ -95,8 +95,8 @@ export type PlantCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  status?: true
   lastWateredAt?: true
+  status?: true
   growthStage?: true
   userId?: true
   rentalSpaceId?: true
@@ -181,9 +181,9 @@ export type PlantGroupByOutputType = {
   id: string
   name: string
   description: string
-  status: string
   lastWateredAt: string
-  growthStage: string
+  status: $Enums.PlantStatus
+  growthStage: $Enums.GrowthStageStatus
   userId: string
   rentalSpaceId: string
   createdAt: Date
@@ -215,9 +215,9 @@ export type PlantWhereInput = {
   id?: Prisma.StringFilter<"Plant"> | string
   name?: Prisma.StringFilter<"Plant"> | string
   description?: Prisma.StringFilter<"Plant"> | string
-  status?: Prisma.StringFilter<"Plant"> | string
   lastWateredAt?: Prisma.StringFilter<"Plant"> | string
-  growthStage?: Prisma.StringFilter<"Plant"> | string
+  status?: Prisma.EnumPlantStatusFilter<"Plant"> | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFilter<"Plant"> | $Enums.GrowthStageStatus
   userId?: Prisma.StringFilter<"Plant"> | string
   rentalSpaceId?: Prisma.StringFilter<"Plant"> | string
   createdAt?: Prisma.DateTimeFilter<"Plant"> | Date | string
@@ -230,8 +230,8 @@ export type PlantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   lastWateredAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   growthStage?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   rentalSpaceId?: Prisma.SortOrder
@@ -248,9 +248,9 @@ export type PlantWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PlantWhereInput | Prisma.PlantWhereInput[]
   name?: Prisma.StringFilter<"Plant"> | string
   description?: Prisma.StringFilter<"Plant"> | string
-  status?: Prisma.StringFilter<"Plant"> | string
   lastWateredAt?: Prisma.StringFilter<"Plant"> | string
-  growthStage?: Prisma.StringFilter<"Plant"> | string
+  status?: Prisma.EnumPlantStatusFilter<"Plant"> | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFilter<"Plant"> | $Enums.GrowthStageStatus
   userId?: Prisma.StringFilter<"Plant"> | string
   rentalSpaceId?: Prisma.StringFilter<"Plant"> | string
   createdAt?: Prisma.DateTimeFilter<"Plant"> | Date | string
@@ -263,8 +263,8 @@ export type PlantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   lastWateredAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   growthStage?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   rentalSpaceId?: Prisma.SortOrder
@@ -282,9 +282,9 @@ export type PlantScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Plant"> | string
   name?: Prisma.StringWithAggregatesFilter<"Plant"> | string
   description?: Prisma.StringWithAggregatesFilter<"Plant"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Plant"> | string
   lastWateredAt?: Prisma.StringWithAggregatesFilter<"Plant"> | string
-  growthStage?: Prisma.StringWithAggregatesFilter<"Plant"> | string
+  status?: Prisma.EnumPlantStatusWithAggregatesFilter<"Plant"> | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusWithAggregatesFilter<"Plant"> | $Enums.GrowthStageStatus
   userId?: Prisma.StringWithAggregatesFilter<"Plant"> | string
   rentalSpaceId?: Prisma.StringWithAggregatesFilter<"Plant"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Plant"> | Date | string
@@ -295,9 +295,9 @@ export type PlantCreateInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPlantsInput
@@ -308,9 +308,9 @@ export type PlantUncheckedCreateInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   userId: string
   rentalSpaceId: string
   createdAt?: Date | string
@@ -321,9 +321,9 @@ export type PlantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPlantsNestedInput
@@ -334,9 +334,9 @@ export type PlantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -347,9 +347,9 @@ export type PlantCreateManyInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   userId: string
   rentalSpaceId: string
   createdAt?: Date | string
@@ -360,9 +360,9 @@ export type PlantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -371,9 +371,9 @@ export type PlantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -394,8 +394,8 @@ export type PlantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   lastWateredAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   growthStage?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   rentalSpaceId?: Prisma.SortOrder
@@ -407,8 +407,8 @@ export type PlantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   lastWateredAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   growthStage?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   rentalSpaceId?: Prisma.SortOrder
@@ -420,8 +420,8 @@ export type PlantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   lastWateredAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   growthStage?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   rentalSpaceId?: Prisma.SortOrder
@@ -513,13 +513,21 @@ export type PlantUncheckedUpdateManyWithoutRentalSpaceNestedInput = {
   deleteMany?: Prisma.PlantScalarWhereInput | Prisma.PlantScalarWhereInput[]
 }
 
+export type EnumPlantStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PlantStatus
+}
+
+export type EnumGrowthStageStatusFieldUpdateOperationsInput = {
+  set?: $Enums.GrowthStageStatus
+}
+
 export type PlantCreateWithoutUserInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   rentalSpace: Prisma.RentalSpaceCreateNestedOneWithoutPlantsInput
@@ -529,9 +537,9 @@ export type PlantUncheckedCreateWithoutUserInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   rentalSpaceId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,9 +578,9 @@ export type PlantScalarWhereInput = {
   id?: Prisma.StringFilter<"Plant"> | string
   name?: Prisma.StringFilter<"Plant"> | string
   description?: Prisma.StringFilter<"Plant"> | string
-  status?: Prisma.StringFilter<"Plant"> | string
   lastWateredAt?: Prisma.StringFilter<"Plant"> | string
-  growthStage?: Prisma.StringFilter<"Plant"> | string
+  status?: Prisma.EnumPlantStatusFilter<"Plant"> | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFilter<"Plant"> | $Enums.GrowthStageStatus
   userId?: Prisma.StringFilter<"Plant"> | string
   rentalSpaceId?: Prisma.StringFilter<"Plant"> | string
   createdAt?: Prisma.DateTimeFilter<"Plant"> | Date | string
@@ -583,9 +591,9 @@ export type PlantCreateWithoutRentalSpaceInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPlantsInput
@@ -595,9 +603,9 @@ export type PlantUncheckedCreateWithoutRentalSpaceInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -633,9 +641,9 @@ export type PlantCreateManyUserInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   rentalSpaceId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -645,9 +653,9 @@ export type PlantUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rentalSpace?: Prisma.RentalSpaceUpdateOneRequiredWithoutPlantsNestedInput
@@ -657,9 +665,9 @@ export type PlantUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -669,9 +677,9 @@ export type PlantUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -681,9 +689,9 @@ export type PlantCreateManyRentalSpaceInput = {
   id?: string
   name?: string
   description?: string
-  status?: string
   lastWateredAt?: string
-  growthStage?: string
+  status?: $Enums.PlantStatus
+  growthStage?: $Enums.GrowthStageStatus
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -693,9 +701,9 @@ export type PlantUpdateWithoutRentalSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPlantsNestedInput
@@ -705,9 +713,9 @@ export type PlantUncheckedUpdateWithoutRentalSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -717,9 +725,9 @@ export type PlantUncheckedUpdateManyWithoutRentalSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   lastWateredAt?: Prisma.StringFieldUpdateOperationsInput | string
-  growthStage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPlantStatusFieldUpdateOperationsInput | $Enums.PlantStatus
+  growthStage?: Prisma.EnumGrowthStageStatusFieldUpdateOperationsInput | $Enums.GrowthStageStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -731,8 +739,8 @@ export type PlantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   name?: boolean
   description?: boolean
-  status?: boolean
   lastWateredAt?: boolean
+  status?: boolean
   growthStage?: boolean
   userId?: boolean
   rentalSpaceId?: boolean
@@ -746,8 +754,8 @@ export type PlantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   description?: boolean
-  status?: boolean
   lastWateredAt?: boolean
+  status?: boolean
   growthStage?: boolean
   userId?: boolean
   rentalSpaceId?: boolean
@@ -761,8 +769,8 @@ export type PlantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   description?: boolean
-  status?: boolean
   lastWateredAt?: boolean
+  status?: boolean
   growthStage?: boolean
   userId?: boolean
   rentalSpaceId?: boolean
@@ -776,8 +784,8 @@ export type PlantSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
-  status?: boolean
   lastWateredAt?: boolean
+  status?: boolean
   growthStage?: boolean
   userId?: boolean
   rentalSpaceId?: boolean
@@ -785,7 +793,7 @@ export type PlantSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PlantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "status" | "lastWateredAt" | "growthStage" | "userId" | "rentalSpaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["plant"]>
+export type PlantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "lastWateredAt" | "status" | "growthStage" | "userId" | "rentalSpaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["plant"]>
 export type PlantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   rentalSpace?: boolean | Prisma.RentalSpaceDefaultArgs<ExtArgs>
@@ -809,9 +817,9 @@ export type $PlantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     name: string
     description: string
-    status: string
     lastWateredAt: string
-    growthStage: string
+    status: $Enums.PlantStatus
+    growthStage: $Enums.GrowthStageStatus
     userId: string
     rentalSpaceId: string
     createdAt: Date
@@ -1244,9 +1252,9 @@ export interface PlantFieldRefs {
   readonly id: Prisma.FieldRef<"Plant", 'String'>
   readonly name: Prisma.FieldRef<"Plant", 'String'>
   readonly description: Prisma.FieldRef<"Plant", 'String'>
-  readonly status: Prisma.FieldRef<"Plant", 'String'>
   readonly lastWateredAt: Prisma.FieldRef<"Plant", 'String'>
-  readonly growthStage: Prisma.FieldRef<"Plant", 'String'>
+  readonly status: Prisma.FieldRef<"Plant", 'PlantStatus'>
+  readonly growthStage: Prisma.FieldRef<"Plant", 'GrowthStageStatus'>
   readonly userId: Prisma.FieldRef<"Plant", 'String'>
   readonly rentalSpaceId: Prisma.FieldRef<"Plant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Plant", 'DateTime'>

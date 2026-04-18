@@ -191,6 +191,7 @@ export type SustainabilityCardWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"SustainabilityCard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SustainabilityCard"> | Date | string
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  products?: Prisma.ProductListRelationFilter
 }
 
 export type SustainabilityCardOrderByWithRelationInput = {
@@ -201,6 +202,7 @@ export type SustainabilityCardOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   vendor?: Prisma.VendorOrderByWithRelationInput
+  products?: Prisma.ProductOrderByRelationAggregateInput
 }
 
 export type SustainabilityCardWhereUniqueInput = Prisma.AtLeast<{
@@ -214,6 +216,7 @@ export type SustainabilityCardWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"SustainabilityCard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SustainabilityCard"> | Date | string
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  products?: Prisma.ProductListRelationFilter
 }, "id">
 
 export type SustainabilityCardOrderByWithAggregationInput = {
@@ -247,6 +250,7 @@ export type SustainabilityCardCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   vendor: Prisma.VendorCreateNestedOneWithoutSustainabilityCardsInput
+  products?: Prisma.ProductCreateNestedManyWithoutSustainabilityCardInput
 }
 
 export type SustainabilityCardUncheckedCreateInput = {
@@ -256,6 +260,7 @@ export type SustainabilityCardUncheckedCreateInput = {
   certificationDate?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSustainabilityCardInput
 }
 
 export type SustainabilityCardUpdateInput = {
@@ -265,6 +270,7 @@ export type SustainabilityCardUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUpdateOneRequiredWithoutSustainabilityCardsNestedInput
+  products?: Prisma.ProductUpdateManyWithoutSustainabilityCardNestedInput
 }
 
 export type SustainabilityCardUncheckedUpdateInput = {
@@ -274,6 +280,7 @@ export type SustainabilityCardUncheckedUpdateInput = {
   certificationDate?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSustainabilityCardNestedInput
 }
 
 export type SustainabilityCardCreateManyInput = {
@@ -310,6 +317,11 @@ export type SustainabilityCardListRelationFilter = {
 
 export type SustainabilityCardOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type SustainabilityCardScalarRelationFilter = {
+  is?: Prisma.SustainabilityCardWhereInput
+  isNot?: Prisma.SustainabilityCardWhereInput
 }
 
 export type SustainabilityCardCountOrderByAggregateInput = {
@@ -381,12 +393,27 @@ export type SustainabilityCardUncheckedUpdateManyWithoutVendorNestedInput = {
   deleteMany?: Prisma.SustainabilityCardScalarWhereInput | Prisma.SustainabilityCardScalarWhereInput[]
 }
 
+export type SustainabilityCardCreateNestedOneWithoutProductsInput = {
+  create?: Prisma.XOR<Prisma.SustainabilityCardCreateWithoutProductsInput, Prisma.SustainabilityCardUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.SustainabilityCardCreateOrConnectWithoutProductsInput
+  connect?: Prisma.SustainabilityCardWhereUniqueInput
+}
+
+export type SustainabilityCardUpdateOneRequiredWithoutProductsNestedInput = {
+  create?: Prisma.XOR<Prisma.SustainabilityCardCreateWithoutProductsInput, Prisma.SustainabilityCardUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.SustainabilityCardCreateOrConnectWithoutProductsInput
+  upsert?: Prisma.SustainabilityCardUpsertWithoutProductsInput
+  connect?: Prisma.SustainabilityCardWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SustainabilityCardUpdateToOneWithWhereWithoutProductsInput, Prisma.SustainabilityCardUpdateWithoutProductsInput>, Prisma.SustainabilityCardUncheckedUpdateWithoutProductsInput>
+}
+
 export type SustainabilityCardCreateWithoutVendorInput = {
   id?: string
   certifyingAgency?: string
   certificationDate?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  products?: Prisma.ProductCreateNestedManyWithoutSustainabilityCardInput
 }
 
 export type SustainabilityCardUncheckedCreateWithoutVendorInput = {
@@ -395,6 +422,7 @@ export type SustainabilityCardUncheckedCreateWithoutVendorInput = {
   certificationDate?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSustainabilityCardInput
 }
 
 export type SustainabilityCardCreateOrConnectWithoutVendorInput = {
@@ -435,6 +463,58 @@ export type SustainabilityCardScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"SustainabilityCard"> | Date | string
 }
 
+export type SustainabilityCardCreateWithoutProductsInput = {
+  id?: string
+  certifyingAgency?: string
+  certificationDate?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vendor: Prisma.VendorCreateNestedOneWithoutSustainabilityCardsInput
+}
+
+export type SustainabilityCardUncheckedCreateWithoutProductsInput = {
+  id?: string
+  vendorId: string
+  certifyingAgency?: string
+  certificationDate?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SustainabilityCardCreateOrConnectWithoutProductsInput = {
+  where: Prisma.SustainabilityCardWhereUniqueInput
+  create: Prisma.XOR<Prisma.SustainabilityCardCreateWithoutProductsInput, Prisma.SustainabilityCardUncheckedCreateWithoutProductsInput>
+}
+
+export type SustainabilityCardUpsertWithoutProductsInput = {
+  update: Prisma.XOR<Prisma.SustainabilityCardUpdateWithoutProductsInput, Prisma.SustainabilityCardUncheckedUpdateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.SustainabilityCardCreateWithoutProductsInput, Prisma.SustainabilityCardUncheckedCreateWithoutProductsInput>
+  where?: Prisma.SustainabilityCardWhereInput
+}
+
+export type SustainabilityCardUpdateToOneWithWhereWithoutProductsInput = {
+  where?: Prisma.SustainabilityCardWhereInput
+  data: Prisma.XOR<Prisma.SustainabilityCardUpdateWithoutProductsInput, Prisma.SustainabilityCardUncheckedUpdateWithoutProductsInput>
+}
+
+export type SustainabilityCardUpdateWithoutProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  certifyingAgency?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationDate?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vendor?: Prisma.VendorUpdateOneRequiredWithoutSustainabilityCardsNestedInput
+}
+
+export type SustainabilityCardUncheckedUpdateWithoutProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  certifyingAgency?: Prisma.StringFieldUpdateOperationsInput | string
+  certificationDate?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type SustainabilityCardCreateManyVendorInput = {
   id?: string
   certifyingAgency?: string
@@ -449,6 +529,7 @@ export type SustainabilityCardUpdateWithoutVendorInput = {
   certificationDate?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUpdateManyWithoutSustainabilityCardNestedInput
 }
 
 export type SustainabilityCardUncheckedUpdateWithoutVendorInput = {
@@ -457,6 +538,7 @@ export type SustainabilityCardUncheckedUpdateWithoutVendorInput = {
   certificationDate?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSustainabilityCardNestedInput
 }
 
 export type SustainabilityCardUncheckedUpdateManyWithoutVendorInput = {
@@ -468,6 +550,35 @@ export type SustainabilityCardUncheckedUpdateManyWithoutVendorInput = {
 }
 
 
+/**
+ * Count Type SustainabilityCardCountOutputType
+ */
+
+export type SustainabilityCardCountOutputType = {
+  products: number
+}
+
+export type SustainabilityCardCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  products?: boolean | SustainabilityCardCountOutputTypeCountProductsArgs
+}
+
+/**
+ * SustainabilityCardCountOutputType without action
+ */
+export type SustainabilityCardCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SustainabilityCardCountOutputType
+   */
+  select?: Prisma.SustainabilityCardCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SustainabilityCardCountOutputType without action
+ */
+export type SustainabilityCardCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductWhereInput
+}
+
 
 export type SustainabilityCardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -477,6 +588,8 @@ export type SustainabilityCardSelect<ExtArgs extends runtime.Types.Extensions.In
   createdAt?: boolean
   updatedAt?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  products?: boolean | Prisma.SustainabilityCard$productsArgs<ExtArgs>
+  _count?: boolean | Prisma.SustainabilityCardCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sustainabilityCard"]>
 
 export type SustainabilityCardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -511,6 +624,8 @@ export type SustainabilityCardSelectScalar = {
 export type SustainabilityCardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "certifyingAgency" | "certificationDate" | "createdAt" | "updatedAt", ExtArgs["result"]["sustainabilityCard"]>
 export type SustainabilityCardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  products?: boolean | Prisma.SustainabilityCard$productsArgs<ExtArgs>
+  _count?: boolean | Prisma.SustainabilityCardCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SustainabilityCardIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
@@ -523,6 +638,7 @@ export type $SustainabilityCardPayload<ExtArgs extends runtime.Types.Extensions.
   name: "SustainabilityCard"
   objects: {
     vendor: Prisma.$VendorPayload<ExtArgs>
+    products: Prisma.$ProductPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -926,6 +1042,7 @@ readonly fields: SustainabilityCardFieldRefs;
 export interface Prisma__SustainabilityCardClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   vendor<T extends Prisma.VendorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VendorDefaultArgs<ExtArgs>>): Prisma.Prisma__VendorClient<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  products<T extends Prisma.SustainabilityCard$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SustainabilityCard$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1359,6 +1476,30 @@ export type SustainabilityCardDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many SustainabilityCards to delete.
    */
   limit?: number
+}
+
+/**
+ * SustainabilityCard.products
+ */
+export type SustainabilityCard$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Product
+   */
+  select?: Prisma.ProductSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Product
+   */
+  omit?: Prisma.ProductOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductInclude<ExtArgs> | null
+  where?: Prisma.ProductWhereInput
+  orderBy?: Prisma.ProductOrderByWithRelationInput | Prisma.ProductOrderByWithRelationInput[]
+  cursor?: Prisma.ProductWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
 }
 
 /**

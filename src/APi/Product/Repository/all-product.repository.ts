@@ -1,27 +1,21 @@
 import { prisma } from "../../../lib/prisma.js";
-import type { QueryType } from "../user-type.js";
+import type { QueryType } from "../../User/user-type.js";
 
-export const GetAllUser = async ({
+
+export const GetAllProducts = async ({
   page = 1,
   limit = 10,
-  sortType = "createdAt",
+  sortType = "updatedAt",
   sortBy = "desc",
   search = "",
 }: QueryType) => {
+
   const skipPage = (page - 1) * limit;
 
-  const allUsers = await prisma.user.findMany({
+  // get all products by vendor based on search
+  const getProducts = await prisma.product.findMany({
     where: {
       name: { contains: search, mode: "insensitive" },
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      status: true,
-      createdAt: true,
-      updatedAt: true,
     },
     orderBy: {
       [sortType]: sortBy,
@@ -30,5 +24,5 @@ export const GetAllUser = async ({
     take: Number(limit),
   });
 
-  return allUsers;
+  return getProducts;
 };

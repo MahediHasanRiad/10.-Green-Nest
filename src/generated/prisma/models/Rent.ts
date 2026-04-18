@@ -30,7 +30,7 @@ export type RentMinAggregateOutputType = {
   vendorId: string | null
   rentalSpaceId: string | null
   duration: string | null
-  status: string | null
+  status: $Enums.RentStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -41,7 +41,7 @@ export type RentMaxAggregateOutputType = {
   vendorId: string | null
   rentalSpaceId: string | null
   duration: string | null
-  status: string | null
+  status: $Enums.RentStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -171,7 +171,7 @@ export type RentGroupByOutputType = {
   vendorId: string
   rentalSpaceId: string
   duration: string
-  status: string
+  status: $Enums.RentStatus
   createdAt: Date
   updatedAt: Date
   _count: RentCountAggregateOutputType | null
@@ -203,7 +203,7 @@ export type RentWhereInput = {
   vendorId?: Prisma.StringFilter<"Rent"> | string
   rentalSpaceId?: Prisma.StringFilter<"Rent"> | string
   duration?: Prisma.StringFilter<"Rent"> | string
-  status?: Prisma.StringFilter<"Rent"> | string
+  status?: Prisma.EnumRentStatusFilter<"Rent"> | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -234,7 +234,7 @@ export type RentWhereUniqueInput = Prisma.AtLeast<{
   vendorId?: Prisma.StringFilter<"Rent"> | string
   rentalSpaceId?: Prisma.StringFilter<"Rent"> | string
   duration?: Prisma.StringFilter<"Rent"> | string
-  status?: Prisma.StringFilter<"Rent"> | string
+  status?: Prisma.EnumRentStatusFilter<"Rent"> | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -265,7 +265,7 @@ export type RentScalarWhereWithAggregatesInput = {
   vendorId?: Prisma.StringWithAggregatesFilter<"Rent"> | string
   rentalSpaceId?: Prisma.StringWithAggregatesFilter<"Rent"> | string
   duration?: Prisma.StringWithAggregatesFilter<"Rent"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Rent"> | string
+  status?: Prisma.EnumRentStatusWithAggregatesFilter<"Rent"> | $Enums.RentStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Rent"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Rent"> | Date | string
 }
@@ -273,7 +273,7 @@ export type RentScalarWhereWithAggregatesInput = {
 export type RentCreateInput = {
   id?: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRentsInput
@@ -287,7 +287,7 @@ export type RentUncheckedCreateInput = {
   vendorId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -295,7 +295,7 @@ export type RentUncheckedCreateInput = {
 export type RentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRentsNestedInput
@@ -309,7 +309,7 @@ export type RentUncheckedUpdateInput = {
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -320,7 +320,7 @@ export type RentCreateManyInput = {
   vendorId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -328,7 +328,7 @@ export type RentCreateManyInput = {
 export type RentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -339,7 +339,7 @@ export type RentUncheckedUpdateManyInput = {
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -513,10 +513,14 @@ export type RentUncheckedUpdateManyWithoutRentalSpaceNestedInput = {
   deleteMany?: Prisma.RentScalarWhereInput | Prisma.RentScalarWhereInput[]
 }
 
+export type EnumRentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.RentStatus
+}
+
 export type RentCreateWithoutUserInput = {
   id?: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   vendor: Prisma.VendorCreateNestedOneWithoutRentsInput
@@ -528,7 +532,7 @@ export type RentUncheckedCreateWithoutUserInput = {
   vendorId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -568,7 +572,7 @@ export type RentScalarWhereInput = {
   vendorId?: Prisma.StringFilter<"Rent"> | string
   rentalSpaceId?: Prisma.StringFilter<"Rent"> | string
   duration?: Prisma.StringFilter<"Rent"> | string
-  status?: Prisma.StringFilter<"Rent"> | string
+  status?: Prisma.EnumRentStatusFilter<"Rent"> | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Rent"> | Date | string
 }
@@ -576,7 +580,7 @@ export type RentScalarWhereInput = {
 export type RentCreateWithoutVendorInput = {
   id?: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRentsInput
@@ -588,7 +592,7 @@ export type RentUncheckedCreateWithoutVendorInput = {
   userId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -622,7 +626,7 @@ export type RentUpdateManyWithWhereWithoutVendorInput = {
 export type RentCreateWithoutRentalSpaceInput = {
   id?: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRentsInput
@@ -634,7 +638,7 @@ export type RentUncheckedCreateWithoutRentalSpaceInput = {
   userId: string
   vendorId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -670,7 +674,7 @@ export type RentCreateManyUserInput = {
   vendorId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -678,7 +682,7 @@ export type RentCreateManyUserInput = {
 export type RentUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUpdateOneRequiredWithoutRentsNestedInput
@@ -690,7 +694,7 @@ export type RentUncheckedUpdateWithoutUserInput = {
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -700,7 +704,7 @@ export type RentUncheckedUpdateManyWithoutUserInput = {
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -710,7 +714,7 @@ export type RentCreateManyVendorInput = {
   userId: string
   rentalSpaceId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -718,7 +722,7 @@ export type RentCreateManyVendorInput = {
 export type RentUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRentsNestedInput
@@ -730,7 +734,7 @@ export type RentUncheckedUpdateWithoutVendorInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -740,7 +744,7 @@ export type RentUncheckedUpdateManyWithoutVendorInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rentalSpaceId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -750,7 +754,7 @@ export type RentCreateManyRentalSpaceInput = {
   userId: string
   vendorId: string
   duration?: string
-  status?: string
+  status?: $Enums.RentStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -758,7 +762,7 @@ export type RentCreateManyRentalSpaceInput = {
 export type RentUpdateWithoutRentalSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRentsNestedInput
@@ -770,7 +774,7 @@ export type RentUncheckedUpdateWithoutRentalSpaceInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -780,7 +784,7 @@ export type RentUncheckedUpdateManyWithoutRentalSpaceInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vendorId?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRentStatusFieldUpdateOperationsInput | $Enums.RentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -870,7 +874,7 @@ export type $RentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     vendorId: string
     rentalSpaceId: string
     duration: string
-    status: string
+    status: $Enums.RentStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["rent"]>
@@ -1304,7 +1308,7 @@ export interface RentFieldRefs {
   readonly vendorId: Prisma.FieldRef<"Rent", 'String'>
   readonly rentalSpaceId: Prisma.FieldRef<"Rent", 'String'>
   readonly duration: Prisma.FieldRef<"Rent", 'String'>
-  readonly status: Prisma.FieldRef<"Rent", 'String'>
+  readonly status: Prisma.FieldRef<"Rent", 'RentStatus'>
   readonly createdAt: Prisma.FieldRef<"Rent", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Rent", 'DateTime'>
 }
