@@ -27,7 +27,7 @@ export const getAllUserController = asyncHandler(async (req, res) => {
   limit = Number(limit || 10);
 
   const id = req.user?.id;
-  if (!id) throw createError(400, "Invalid Token !!!");
+  if (!id) throw createError(401, "Unauthorized !!!");
 
   // filter all user
   const filterUser = await GetAllUser({page, limit, sortBy, sortType, search})

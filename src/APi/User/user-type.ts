@@ -10,14 +10,14 @@ export interface UserType {
   readonly id: string;
   name: string;
   email: string;
-  role: 'User' | 'Vendor' | 'Admin',
-  status: 'Pending' | 'Rejected' | 'Accepted'
+  role: 'USER' | 'VENDOR' | 'ADMIN',
+  status: 'PENDING' | 'ACCEPTED' | 'REJECTED'
 }
 
 export interface decodedType {
   id: string;
   name: string;
-  role: 'User' | 'Vendor' | 'Admin'
+  role: 'USER' | 'VENDOR' | 'ADMIN',
 }
 
 export interface ChangePassType {

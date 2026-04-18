@@ -16,7 +16,7 @@ export const UpdateUserController = asyncHandler(async (req, res) => {
 
   // get user
   const id = req.user?.id;
-  if (!id) throw createError(400, "invalid token !!!");
+  if (!id) throw createError(401, "Unauthorized !!!");
 
   // update
   const user = await prisma.user.update({

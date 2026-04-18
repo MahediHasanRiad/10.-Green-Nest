@@ -10,14 +10,14 @@ const authVerify = asyncHandler(async (req: Request, _res: Response, next: NextF
   const token =
     req.cookies?.accessToken ||
     req.header("Authorization")?.replace("Bearer ", "");
-  if (!token) throw createError(400, "Invalid Token !!!");
+  if (!token) throw createError(401, "Unauthorized: No token provided");
 
   // decoded from token
   const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY as string ) as decodedType;
 
 
   let user = await prisma.user.findUnique({where: {id: decoded?.id}})
-  if (!user) throw createError(404, "Invalid Token !!!");
+  if (!user) throw createError(404, "user not found !!!");
   
   req.user = user as UserType;
 

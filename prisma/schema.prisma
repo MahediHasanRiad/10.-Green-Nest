@@ -7,13 +7,68 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  VENDOR
+  ADMIN
+}
+enum Status {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum RentStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+}
+
+enum PlantStatus {
+  HEALTHY
+  NEED_CARE
+  DISEASED
+  DEAD
+}
+
+enum GrowthStageStatus {
+  SEED
+  SEEDING
+  GROWING
+  MATURE
+  HARVESTED
+}
+
+enum CertificateStatus {
+  PENDING_APPROVAL
+  ISSUED
+  REVOKED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum Category {
+  Seeds
+  Tools
+  Organic
+}
+
 model User {
   id       String  @id @default(uuid())
   email    String  @unique
   name     String
   password String
-  role     String  @default("User")
-  status   String  @default("Pending")
+  role     Role    @default(USER)
+  status   Status  @default(PENDING)
   vendor   Vendor?
   orders   Order[]
   rents    Rent[]
@@ -40,15 +95,15 @@ model Vendor {
 }
 
 model Product {
-  id                  String  @id @default(uuid())
-  vendor              Vendor  @relation(fields: [vendorId], references: [id])
+  id                  String            @id @default(uuid())
+  vendor              Vendor            @relation(fields: [vendorId], references: [id])
   vendorId            String
-  name                String  @default("Tometo")
-  description         String  @default("something about plant")
-  price               Int     @default(100)
-  category            String  @default("seeds")
-  availableQuantity   Int     @default(1)
-  certificationStatus String  @default("Pending")
+  name                String            @default("Tometo")
+  description         String            @default("something about plant")
+  price               Int               @default(100)
+  category            Category          @default(Seeds)
+  availableQuantity   Int               @default(1)
+  certificationStatus CertificateStatus @default(PENDING_APPROVAL)
   orders              Order[]
 
   createdAt DateTime @default(now())
@@ -71,14 +126,14 @@ model RentalSpace {
 }
 
 model Order {
-  id        String  @id @default(uuid())
-  user      User    @relation(fields: [userId], references: [id])
+  id        String      @id @default(uuid())
+  user      User        @relation(fields: [userId], references: [id])
   userId    String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product     @relation(fields: [productId], references: [id])
   productId String
-  vendor    Vendor  @relation(fields: [vendorId], references: [id])
+  vendor    Vendor      @relation(fields: [vendorId], references: [id])
   vendorId  String
-  status    String  @default("Pending")
+  status    OrderStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -93,22 +148,22 @@ model Rent {
   rentalSpace   RentalSpace @relation(fields: [rentalSpaceId], references: [id])
   rentalSpaceId String
   duration      String      @default("01-08-2026 - 01-12-2026")
-  status        String      @default("Pending")
+  status        RentStatus  @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Plant {
-  id            String      @id @default(uuid())
-  name          String      @default("Tometo")
-  description   String      @default("something about plant")
-  status        String      @default("healthy")
-  lastWateredAt String      @default("10pm")
-  growthStage   String      @default("seed")
-  user          User        @relation(fields: [userId], references: [id])
+  id            String            @id @default(uuid())
+  name          String            @default("Tometo")
+  description   String            @default("something about plant")
+  lastWateredAt String            @default("10pm")
+  status        PlantStatus       @default(HEALTHY)
+  growthStage   GrowthStageStatus @default(SEED)
+  user          User              @relation(fields: [userId], references: [id])
   userId        String
-  rentalSpace   RentalSpace @relation(fields: [rentalSpaceId], references: [id])
+  rentalSpace   RentalSpace       @relation(fields: [rentalSpaceId], references: [id])
   rentalSpaceId String
 
   createdAt DateTime @default(now())

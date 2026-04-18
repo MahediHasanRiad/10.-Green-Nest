@@ -20,7 +20,7 @@ export const ChangePasswordController = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword }: ChangePassType = req.body
   const id = req.user?.id
 
-  if(!id) throw createError(400, 'invalid token !!!')
+  if(!id) throw createError(401, "Unauthorized !!!")
   if(!oldPassword || !newPassword) throw createError(400, 'old password & new password both are required !!!')
 
   // find user

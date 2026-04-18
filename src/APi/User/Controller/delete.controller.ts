@@ -11,7 +11,7 @@ export const DeleteUserController = asyncHandler(async (req, res) => {
   
   // user id from token
   const userId = req.user?.id
-  if(!userId) throw createError(400, 'invalid token !!!')
+  if(!userId) throw createError(401, "Unauthorized !!!")
 
   // verify
   if(userId !== id || req.user?.role !== 'Admin') throw createError(403, 'Unauthorized !!!')
